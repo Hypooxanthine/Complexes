@@ -2,11 +2,11 @@
 
 #include <iostream>
 
-Complex::Complex(const long double& real, const long double& imaginary) 
+Complex::Complex(const double& real, const double& imaginary) 
 	: m_Re(real), m_Im(imaginary)
 {}
 
-Complex::Complex(const long double& real)
+Complex::Complex(const double& real)
 	: Complex(real, 0)
 {}
 
@@ -50,12 +50,13 @@ Complex Complex::conjugate() const
 	return out;
 }
 
-long double Complex::module() const
+
+double Complex::module() const
 {
 	return sqrt(m_Re * m_Re + m_Im * m_Im);
 }
 
-long double Complex::argument() const
+double Complex::argument() const
 {
 	if (m_Im > 0)
 		return acos(m_Re / module());
@@ -89,7 +90,7 @@ Complex Complex::add(const Complex& other) const
 	return out;
 }
 
-Complex Complex::add(const long double& value) const
+Complex Complex::add(const double& value) const
 {
 	return this->add(Complex(value));
 }
@@ -99,7 +100,7 @@ Complex Complex::subtract(const Complex& other) const
 	return this->add(Complex(-other.m_Re, -other.m_Im));
 }
 
-Complex Complex::subtract(const long double& value) const
+Complex Complex::subtract(const double& value) const
 {
 	return this->subtract(Complex(value));
 }
@@ -111,7 +112,7 @@ Complex Complex::multiply(const Complex& other) const
 	return out;
 }
 
-Complex Complex::multiply(const long double& value) const
+Complex Complex::multiply(const double& value) const
 {
 	return this->multiply(Complex(value));
 }
@@ -122,12 +123,12 @@ Complex Complex::divide(const Complex& other) const
 		return Complex();
 
 	Complex numerator = this->multiply(other.conjugate());
-	long double denominator = other.m_Re * other.m_Re - other.m_Im * other.m_Im;
+	double denominator = other.m_Re * other.m_Re - other.m_Im * other.m_Im;
 
 	return Complex(numerator.m_Re / denominator, numerator.m_Im / denominator);
 }
 
-Complex Complex::divide(const long double& value) const
+Complex Complex::divide(const double& value) const
 {
 	return this->divide(Complex(value));
 }
@@ -137,7 +138,7 @@ Complex Complex::operator+(const Complex& other) const
 	return this->add(other);
 }
 
-Complex Complex::operator+(const long double& value) const
+Complex Complex::operator+(const double& value) const
 {
 	return this->add(value);
 }
@@ -148,7 +149,7 @@ Complex Complex::operator+=(const Complex& other)
 	return *this;
 }
 
-Complex Complex::operator+=(const long double& value)
+Complex Complex::operator+=(const double& value)
 {
 	return *this += Complex(value);
 }
@@ -158,7 +159,7 @@ Complex Complex::operator-(const Complex& other) const
 	return this->subtract(other);
 }
 
-Complex Complex::operator-(const long double& value) const
+Complex Complex::operator-(const double& value) const
 {
 	return this->subtract(value);
 }
@@ -169,7 +170,7 @@ Complex Complex::operator-=(const Complex& other)
 	return *this;
 }
 
-Complex Complex::operator-=(const long double& value)
+Complex Complex::operator-=(const double& value)
 {
 	return *this -= Complex(value);
 }
@@ -179,7 +180,7 @@ Complex Complex::operator*(const Complex& other) const
 	return this->multiply(other);
 }
 
-Complex Complex::operator*(const long double& value) const
+Complex Complex::operator*(const double& value) const
 {
 	return this->multiply(value);
 }
@@ -190,7 +191,7 @@ Complex Complex::operator*=(const Complex& other)
 	return *this;
 }
 
-Complex Complex::operator*=(const long double& value)
+Complex Complex::operator*=(const double& value)
 {
 	return *this *= Complex(value);
 }
@@ -200,7 +201,7 @@ Complex Complex::operator/(const Complex& other) const
 	return this->divide(other);
 }
 
-Complex Complex::operator/(const long double& value) const
+Complex Complex::operator/(const double& value) const
 {
 	return this->divide(value);
 }
@@ -211,12 +212,12 @@ Complex Complex::operator/=(const Complex& other)
 	return *this;
 }
 
-Complex Complex::operator/=(const long double& value)
+Complex Complex::operator/=(const double& value)
 {
 	return *this /= Complex(value);
 }
 
-std::string Complex::to_string(const long double& value) const
+std::string Complex::to_string(const double& value) const
 {
 	std::string out = std::to_string(value);
 	out.erase(out.find_last_not_of('0') + 1, std::string::npos);

@@ -77,14 +77,21 @@ void Mandelbrot::manageEvents()
 				m_Window->close();
 				break;
 			case sf::Keyboard::Add:
-				m_Iterations *= 1.5f;
-				drawSet();
-				std::cout << "New value for m_Iterations : " << m_Iterations << std::endl;
+				if (m_Started)
+				{
+					m_Iterations *= 1.5f;
+					drawSet();
+					std::cout << "New value for m_Iterations : " << m_Iterations << std::endl;
+				}
 				break;
 			case sf::Keyboard::Subtract:
-				m_Iterations /= 1.5f;
-				drawSet();
-				std::cout << "New value for m_Iterations : " << m_Iterations << std::endl;
+				if (m_Started)
+				{
+					m_Iterations /= 1.5f;
+					if (m_Iterations < 2) m_Iterations = 2;
+					drawSet();
+					std::cout << "New value for m_Iterations : " << m_Iterations << std::endl;
+				}
 				break;
 			}
 			break;
@@ -104,6 +111,15 @@ void Mandelbrot::manageEvents()
 					zoom(1.f / 2.f);
 					setOrigin(sf::Vector2u(m_Event.mouseButton.x, m_Event.mouseButton.y), true);
 				}
+			}
+			break;
+		case sf::Event::MouseWheelMoved:
+			if (m_Started)
+			{
+				m_Iterations += m_Event.mouseWheel.delta * 10;
+				if (m_Iterations < 2) m_Iterations = 2;
+				drawSet();
+				std::cout << "New value for m_Iterations : " << m_Iterations << std::endl;
 			}
 			break;
 		}
@@ -143,8 +159,14 @@ void Mandelbrot::drawSet()
 	{
 		for (uint32_t y = 0; y < m_WindowSize.y; y++)
 		{
-			int color = isFromSet(pixelToComplex(sf::Vector2u(x, y)));
-			m_Image.setPixel(x, y, sf::Color(color, color, 127));
+			int i = isFromSet(pixelToComplex(sf::Vector2u(x, y)));
+			sf::Color color;
+			if (i == m_Iterations)
+				color = { 0, 0, 0 };
+			else
+				color = sf::Color(i % 256, 255 - i % 256, 255 - int(i * 255 / m_Iterations));
+
+			m_Image.setPixel(x, y, color);
 		}
 	}
 
@@ -179,34 +201,29 @@ void Mandelbrot::renderAnimation()
 int Mandelbrot::isFromSet(const Complex& z) const
 {
 	Complex z_n = 0;
+	size_t i = 0;
 
-	for (uint32_t i = 0; i < m_Iterations; i++)
+	for (i = 0; i < m_Iterations; i++)
 	{
 		z_n *= z_n;
 		z_n += z;
 
 		if (z_n.module() >= 2)
-			return i + 1;
+			break	;
 	}
 
-	return 0;
+	return i;
 }
 
 Complex Mandelbrot::pixelToComplex(const sf::Vector2u& px) const
 {
 	Complex out;
 
-	out.setReal(((long double)px.x - (long double)m_WindowCenter.x) / m_PxPerUnit);
-	out.setImaginary(((long double)px.y - (long double)m_WindowCenter.y) / m_PxPerUnit);
+	out.setReal(((double)px.x - (double)m_WindowCenter.x) / m_PxPerUnit);
+	out.setImaginary(((double)px.y - (double)m_WindowCenter.y) / m_PxPerUnit);
 
 	out += m_Origin;
 
-	return out;
-}
-
-sf::Vector2u Mandelbrot::complexToPixel(const Complex& z) const
-{
-	sf::Vector2u out;
 	return out;
 }
 
