@@ -116,8 +116,8 @@ void Mandelbrot::manageEvents()
 		case sf::Event::MouseWheelMoved:
 			if (m_Started)
 			{
-				m_Iterations += m_Event.mouseWheel.delta * 10;
-				if (m_Iterations < 2) m_Iterations = 2;
+				if(m_Iterations + m_Event.mouseWheel.delta * 10)
+					m_Iterations += m_Event.mouseWheel.delta * 10;
 				drawSet();
 				std::cout << "New value for m_Iterations : " << m_Iterations << std::endl;
 			}

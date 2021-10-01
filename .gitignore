@@ -31,7 +31,8 @@
 *.out
 *.app
 
-# Images
+# Other
 *.png
 *.avi
 *.gif
+*.rar
