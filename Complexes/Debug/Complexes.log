@@ -1,9 +1,0 @@
-﻿  Mandelbrot.cpp
-  Complex.cpp
-  Main.cpp
-  Button.cpp
-  Text.cpp
-F:\Code\Projets\C++\Complexes\Complexes\src\UserInterface\Text.cpp(16,2): warning C4002: trop d'arguments pour l'appel de macro de type fonction 'LOG_INFO'
-  Widget.cpp
-  Génération de code en cours...
-  Complexes.vcxproj -> F:\Code\Projets\C++\Complexes\Debug\Complexes.exe
