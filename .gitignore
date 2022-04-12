@@ -20,19 +20,13 @@
 *.mod
 *.smod
 
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
 # Executables
 *.exe
 *.out
 *.app
 
-# Other
-*.png
-*.avi
-*.gif
-*.rar
+# Folders
+.vs/
+x86/
+x64/
+Intermediate/
