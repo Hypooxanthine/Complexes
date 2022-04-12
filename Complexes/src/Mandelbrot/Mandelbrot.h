@@ -20,7 +20,7 @@ public:
 
 	void drawSet();
 	void renderAnimation();
-	int isFromSet(const Complex& z) const;
+	size_t mandelCheck(const Complex& z) const;
 	Complex pixelToComplex(const sf::Vector2u& px) const;
 	void setOrigin(const sf::Vector2u& origin, const bool& refresh);
 	void zoom(const float& strength);
@@ -40,8 +40,8 @@ private:
 
 	Complex m_Origin;
 
-	uint32_t m_Iterations = 50;
-	double m_PxPerUnit = 150;
+	size_t m_Iterations = 50;
+	size_t m_PxPerUnit = 150;
 	sf::Image m_Image;
 	sf::Texture m_Texture;
 	sf::Sprite m_Sprite;
